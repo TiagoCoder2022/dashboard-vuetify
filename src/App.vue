@@ -10,20 +10,119 @@
             <v-icon icon="mdi-bell-outline"></v-icon>
           </v-badge>
         </v-btn>
-        
-        <v-avatar>
-          <v-img
-            src="https://images.bstatic.de/lNmMYb-xM7RSPJJYShCcOKUK2T8=/480x480/filters:focal(2651x1564:2671x1584):format(webp)/images/41b2dc71/b1af/408b/8e53/cfb1e49c0221.jpg" 
-            alt="Sheldon" 
-            cover
-          ></v-img>          
-        </v-avatar>
+
+        <v-menu>
+          <template #activator="{ props }">
+            <v-avatar v-bind="props">
+              <v-img
+                src="https://images.bstatic.de/lNmMYb-xM7RSPJJYShCcOKUK2T8=/480x480/filters:focal(2651x1564:2671x1584):format(webp)/images/41b2dc71/b1af/408b/8e53/cfb1e49c0221.jpg" 
+                alt="Sheldon" 
+                cover
+              ></v-img>          
+            </v-avatar>
+          </template>
+          
+          <v-card min-width="200px">
+            <v-list :lines="false" density="compact" nav >
+              <v-list-item prepend-icon="mdi-account-outline">
+                <v-list-item-title>Meu Perfil</v-list-item-title>
+              </v-list-item>
+              <v-list-item prepend-icon="mdi-heart-outline">
+                <v-list-item-title>Favoritos</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-card>
+        </v-menu>
       </template>
     </v-app-bar>
 
     <v-main>
       <v-container>
-        <h1>Dashboard</h1>
+        <h1 class="mb-6">Dashboard</h1>
+
+        <v-card flat class="border mb-4">
+          <div class="d-flex justify-space-between">
+            <v-card-title>Útimos usuários</v-card-title>
+
+            <v-card-title>
+              <v-btn @click="isDialogOpen = true" variant="tonal" size="small">Adicionar usuários</v-btn>
+
+              <v-dialog v-model="isDialogOpen" width="600px">          
+
+                <v-card>
+                  <v-card-title>Adicionar usuário</v-card-title>
+
+                  <v-card-text>
+                    <v-row>
+                      <v-col>
+                        <v-text-field label="Nome" variant="outlined"</v-text-field>
+                      </v-col>
+                      <v-col>
+                        <v-text-field label="Email" variant="outlined"</v-text-field>
+                      </v-col>                      
+                    </v-row>
+                    <v-select 
+                      label="Cargo" 
+                      variant="outlined"
+                      :items="['Admin', 'Gerente', 'Convidado']"
+                    ></v-select>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-btn variant="text" @click="isDialogOpen  = fasle">Cancelar</v-btn>
+                    <v-btn variant="tonal" color="success">Salvar</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </v-card-title>
+          </div>          
+
+          <v-table>
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Cargo</th>
+                <th>Açoes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Tiago</td>
+                <td>tiago@gmail.com</td>
+                <td>Adim</td>
+                <td>
+                  <v-dialog>
+                    <template #activator="{props}">
+                      <v-btn v-bind="props"variant="tonal" color="pimary" >EDITAR</v-btn>
+                    </template>
+
+                    <v-card>
+                      <v-card-text>
+                        Editar
+                      </v-card-text>
+                    </v-card>
+                  </v-dialog>
+                </td>
+              </tr>
+              <tr>
+                <td>Pamela</td>
+                <td>pamela@gmail.com</td>
+                <td>Usuário</td>
+                <td>
+                  <v-btn variant="tonal" color="pimary" >EDITAR</v-btn>
+                </td>
+              </tr>
+              <tr>
+                <td>Joao</td>
+                <td>pamela@gmail.com</td>
+                <td>Usuário</td>
+                <td>
+                  <v-btn variant="tonal" color="pimary" >EDITAR</v-btn>
+                </td>
+              </tr>
+            </tbody>
+          </v-table>
+        </v-card>
 
         <v-row>
           <v-col cols="12" sm="6" md="4" lg="3">
@@ -117,5 +216,8 @@
 </template>
 
 <script setup>
-  //
+  import { ref } from 'vue';
+
+  const isDrawerOpen = ref(false)
+  const isDialogOpen = ref(false)
 </script>
