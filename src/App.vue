@@ -55,10 +55,14 @@
                   <v-card-text>
                     <v-row>
                       <v-col>
-                        <v-text-field label="Nome" variant="outlined"</v-text-field>
+                        <v-text-field label="Nome" variant="outlined"></v-text-field>
                       </v-col>
                       <v-col>
-                        <v-text-field label="Email" variant="outlined"</v-text-field>
+                        <v-text-field 
+                          label="Email" 
+                          variant="outlined"
+                          :rules="emailRules"
+                        ></v-text-field>
                       </v-col>                      
                     </v-row>
                     <v-select 
@@ -93,7 +97,7 @@
                 <td>
                   <v-dialog>
                     <template #activator="{props}">
-                      <v-btn v-bind="props"variant="tonal" color="pimary" >EDITAR</v-btn>
+                      <v-btn v-bind="props" variant="tonal" color="pimary" >EDITAR</v-btn>
                     </template>
 
                     <v-card>
@@ -220,4 +224,14 @@
 
   const isDrawerOpen = ref(false)
   const isDialogOpen = ref(false)
+  const emailRules = [
+    value => {
+      if (value) return true
+      return 'O email é obrigatório'
+    },
+    value => {
+      if(value.includes('@')) return true
+      return 'Email inválido!'
+    }
+  ]
 </script>
